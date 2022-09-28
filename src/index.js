@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require("mongoose");
 require("dotenv").config();
 const clienteRoutes = require("./routes/cliente");
+const petRoutes = require("./routes/pets");
+const servicoRoutes = require("./routes/serviços");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -9,6 +11,8 @@ const port = process.env.PORT || 8080;
 //middleware
 app.use(express.json());
 app.use('/api', clienteRoutes);
+app.use('/api', petRoutes);
+app.use('/api', servicoRoutes);
 
 app.get('/', (req, res) => {
     res.send("teste a api");
