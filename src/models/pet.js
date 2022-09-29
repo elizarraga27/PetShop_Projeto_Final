@@ -22,6 +22,12 @@ const petSchema = mongoose.Schema({
         type: String,
         required: true
     }
-});
+},
+{
+    timestamps: true,
+    versionKey: false
+}
+
+);
 
 module.exports = mongoose.model('pet', petSchema);

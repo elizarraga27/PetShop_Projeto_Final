@@ -13,6 +13,12 @@ const produtoSchema = mongoose.Schema({
         type: String,
         required: false
     }
-});
+},
+{
+    timestamps: true,
+    versionKey: false
+}
+
+);
 
 module.exports = mongoose.model('produto', produtoSchema);

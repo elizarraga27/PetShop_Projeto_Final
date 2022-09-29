@@ -5,6 +5,7 @@ const clienteRoutes = require("./routes/cliente");
 const petRoutes = require("./routes/pet");
 const servicoRoutes = require("./routes/serviço");
 const produtoRoutes = require("./routes/produto");
+const atendimentoRoutes = require("./routes/atendimento");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -15,6 +16,7 @@ app.use('/api', clienteRoutes);
 app.use('/api', petRoutes);
 app.use('/api', servicoRoutes);
 app.use('/api', produtoRoutes);
+app.use('/api', atendimentoRoutes);
 
 app.get('/', (req, res) => {
     res.send("teste a api");
