@@ -4,6 +4,7 @@ require("dotenv").config();
 const clienteRoutes = require("./routes/cliente");
 const petRoutes = require("./routes/pets");
 const servicoRoutes = require("./routes/serviços");
+const produtoRoutes = require("./routes/produtos");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/api', clienteRoutes);
 app.use('/api', petRoutes);
 app.use('/api', servicoRoutes);
+app.use('/api', produtoRoutes);
 
 app.get('/', (req, res) => {
     res.send("teste a api");
