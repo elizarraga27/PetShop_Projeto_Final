@@ -2,9 +2,9 @@ const express = require('express');
 const mongoose = require("mongoose");
 require("dotenv").config();
 const clienteRoutes = require("./routes/cliente");
-const petRoutes = require("./routes/pets");
-const servicoRoutes = require("./routes/serviços");
-const produtoRoutes = require("./routes/produtos");
+const petRoutes = require("./routes/pet");
+const servicoRoutes = require("./routes/serviço");
+const produtoRoutes = require("./routes/produto");
 
 const app = express();
 const port = process.env.PORT || 8080;

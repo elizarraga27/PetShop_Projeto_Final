@@ -1,48 +1,48 @@
 const express = require("express");
-const servicoSchema = require("../models/serviços");
+const petSchema = require("../models/pet");
 
 const router = express.Router();
 
-//get all serviços
-router.get('/servicos', (req,res) => {
-    servicoSchema
+//get all pets
+router.get('/pets', (req,res) => {
+    petSchema
     .find()
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
 
-// create serviço
-router.post('/servicos', (req,res) => {
-    const servico = servicoSchema(req.body);
-    servico
+// create pet
+router.post('/pets', (req,res) => {
+    const pet = petSchema(req.body);
+    pet
     .save()
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
 
-//get serviço
-router.get('/servicos/:id', (req,res) => {
+//get pet
+router.get('/pets/:id', (req,res) => {
     const { id } = req.params;
-    servicoSchema
+    petSchema
     .findById(id)
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
 
-//update serviço
-router.put('/servicos/:id', (req,res) => {
+//update pet
+router.put('/pets/:id', (req,res) => {
     const { id } = req.params;
-    const {nome, valor, descrição } = req.body;
-    servicoSchema
-    .updateOne({ _id: id }, { $set: {nome, valor, descrição }})
+    const {nome, idade, Peso, raça, tipo } = req.body;
+    petSchema
+    .updateOne({ _id: id }, { $set: {nome, idade, Peso, raça, tipo }})
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
 
-//delete serviço
-router.delete('/servicos/:id', (req,res) => {
+//delete a cliente
+router.delete('/pets/:id', (req,res) => {
     const { id } = req.params;
-    servicoSchema
+    petSchema
     .remove({ _id: id })
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
