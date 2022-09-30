@@ -7,7 +7,6 @@ const router = express.Router();
 router.get('/clientes', (req,res) => {
     clienteSchema
     .find()
-    .populate('pets')
     .then((data) => res.json(data))
     .catch((err) => res.json({message: err}));
 });
@@ -17,7 +16,6 @@ router.get('/clientes/:id', (req,res) => {
     const { id } = req.params;
     clienteSchema
     .findById(id)
-    .populate('pets')
     .then((data) => res.json(data))
     .catch((err) => res.json({message: err}));
 });
