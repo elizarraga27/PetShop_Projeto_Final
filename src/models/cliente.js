@@ -40,8 +40,8 @@ const clienteSchema = mongoose.Schema({
     endereço: {
         type: String,
         required  : [ true, 'Se precisa endereço' ]
-    },
-    pets: {type: Schema.ObjectId, ref: 'pet' }
+    }
+    
     
     
 },

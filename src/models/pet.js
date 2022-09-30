@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const petSchema = mongoose.Schema({
     nome: {
@@ -21,7 +22,8 @@ const petSchema = mongoose.Schema({
     tipo: {
         type: String,
         required: true
-    }
+    },
+    tutor: {type: Schema.ObjectId, ref: 'cliente', required: true }
 },
 {
     timestamps: true,

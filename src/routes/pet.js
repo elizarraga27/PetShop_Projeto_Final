@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/pets', (req,res) => {
     petSchema
     .find()
+    .populate('cliente')
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
@@ -25,6 +26,7 @@ router.get('/pets/:id', (req,res) => {
     const { id } = req.params;
     petSchema
     .findById(id)
+    .populate('cliente')
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
@@ -32,9 +34,9 @@ router.get('/pets/:id', (req,res) => {
 //update pet
 router.put('/pets/:id', (req,res) => {
     const { id } = req.params;
-    const {nome, idade, Peso, raça, tipo } = req.body;
+    const {nome, idade, Peso, raça, tipo, tutor } = req.body;
     petSchema
-    .updateOne({ _id: id }, { $set: {nome, idade, Peso, raça, tipo }})
+    .updateOne({ _id: id }, { $set: {nome, idade, Peso, raça, tipo, tutor }})
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
