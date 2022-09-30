@@ -16,6 +16,7 @@ router.get('/clientes/:id', (req,res) => {
     const { id } = req.params;
     clienteSchema
     .findById(id)
+    .populate('pets')
     .then((data) => res.json(data))
     .catch((err) => res.json({message: err}));
 });
