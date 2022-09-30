@@ -10,7 +10,7 @@ const petSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    Peso: {
+    peso: {
         type: Number,
         required: true
     },

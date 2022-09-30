@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/pets', (req,res) => {
     petSchema
     .find()
-    .populate('cliente')
+    .populate('tutor')
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
@@ -26,7 +26,7 @@ router.get('/pets/:id', (req,res) => {
     const { id } = req.params;
     petSchema
     .findById(id)
-    .populate('cliente')
+    .populate('tutor')
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
