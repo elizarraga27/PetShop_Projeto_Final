@@ -19,6 +19,15 @@ router.get('/clientes/:id', (req,res) => {
     .then((data) => res.json(data))
     .catch((err) => res.json({message: err}));
 });
+//get pelo cpf
+router.get('/clientes/cpf/:cpf', (req,res) => {
+    const {cpf}  = req.params;
+    clienteSchema
+    .findOne({ cpf: cpf})
+    .then((data) => res.json(data))
+    .catch((err) => res.json({message: err}));
+});
+
 
 // create cliente
 router.post('/clientes', (req,res) => {
@@ -39,6 +48,7 @@ router.put('/clientes/:id', (req,res) => {
     .catch((err) => res.json({message: err}));
 });
 
+
 //delete a cliente
 router.delete('/clientes/:id', (req,res) => {
     const { id } = req.params;
@@ -47,6 +57,18 @@ router.delete('/clientes/:id', (req,res) => {
     .then((data) => res.json(data))
     .catch((err) => res.json({message: err}));
 });
+
+//delete pelo cpf
+router.delete('/clientes/cpf/:cpf', (req,res) => {
+    const {cpf}  = req.params;
+    clienteSchema
+    .remove({ cpf: cpf})
+    .then((data) => res.json(data))
+    .catch((err) => res.json({message: err}));
+});
+
+
+
 
 
 

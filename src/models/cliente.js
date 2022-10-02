@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const validateEmail = (email) => {
+    const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email);
+  };
 
 const clienteSchema = mongoose.Schema({
     nome: {
@@ -19,23 +23,22 @@ const clienteSchema = mongoose.Schema({
         required  : [ true, 'Se precisa cpf' ],
         maxlength : [ 11, 'O cpf tem que ter 11 numero'],
         minlength : [ 11, 'O cpf tem que ter 11 numero'],
-        unique    : [ true, 'cpf já existe']
+        
         
     },
     telefone: {
         type: Number,
         required  : [ true, 'Se precisa numero de telefone' ],
-        unique    : [ true, 'telefone já existe']
     },
     email: {
         type: String,
-        unique    : [ true, 'email já existe'], 
         required  : [ true, 'Se precisa email' ], 
         maxlength : [ 100, 'El correo no puede exceder los 100 caracteres'],
-        regex     : function( value ) {
-          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return re.test(String(value).toLowerCase());
-        }
+        validate: [validateEmail, "cadastre email valido"],
+        match: [
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+          "Cadastre email valido",
+        ],
     },
     endereço: {
         type: String,

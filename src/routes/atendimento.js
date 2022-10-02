@@ -5,13 +5,6 @@ const cliente = require("../models/cliente");
 
 const router = express.Router();
 
-//get all clientes
-//router.get('/atendimentos', (req,res) => {
-   // atendimentoSchema
-   // .find()
-   // .then((data) => res.json(data))
-    //.catch((err) => res.json({message: err}));
-//});
 
 // create cliente
 router.post('/atendimentos', (req,res) => {
@@ -33,6 +26,19 @@ atendimento
   .then((data) => res.json(data))
   .catch((err) => res.json({message: err}));
   
+});
+
+//get pelo cpf
+router.get('/atendimentos/cpf/:cpf', (req,res) => {
+  const {cpf}  = req.params;
+  atendimentoSchema
+  .findOne({ cpf: cpf})
+  .populate({path:'cliente', select: 'nome cpf'})
+  .populate({path:'pet', select:'nome tipo'})
+  .populate({path:'produto', select:'nome valor'})
+  .populate({path:'serviço', select:'nome valor'})
+  .then((data) => res.json(data))
+  .catch((err) => res.json({message: err}));
 });
 
 //get Id atendimento
