@@ -24,11 +24,12 @@ router.post('/atendimentos', (req,res) => {
 //Get All atendimentos
 router.get('/atendimentos', (req,res) => {
 
-atendimento.
-  find().
-  populate('cliente')
-  .populate('pet')
-  .populate('produto')
+atendimento
+  .find()
+  .populate({path:'cliente', select: 'nome cpf'})
+  .populate({path:'pet', select:'nome tipo'})
+  .populate({path:'produto', select:'nome valor'})
+  .populate({path:'serviço', select:'nome valor'})
   .then((data) => res.json(data))
   .catch((err) => res.json({message: err}));
   
@@ -40,10 +41,10 @@ router.get('/atendimentos/:id', (req,res) => {
   const { id } = req.params;
   atendimentoSchema
   .findById(id)
-  .populate('cliente')
-  .populate('pet')
-  .populate('produto')
-  .populate('serviço')
+  .populate({path:'cliente', select: 'nome cpf'})
+  .populate({path:'pet', select:'nome tipo'})
+  .populate({path:'produto', select:'nome valor'})
+  .populate({path:'serviço', select:'nome valor'})
   .then((data) => res.status(200).json(data))
   .catch((err) => res.status(400).json({message: err}));
 });
