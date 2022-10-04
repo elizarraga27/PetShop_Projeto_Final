@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const produtoSchema = mongoose.Schema({
     nome: {
         type: String,
-        required: true
+        required  : [ true, 'Se precisa o nome do produto' ]
     },
     valor: {
         type: Number,
-        required: true
+        required  : [ true, 'Se precisa o valor do produto' ]
     },
     descrição: {
         type: String,

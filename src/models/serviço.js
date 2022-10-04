@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const servicoSchema = mongoose.Schema({
     nome: {
         type: String,
-        required: true
+        required  : [ true, 'Se precisa o nome do serviço' ]
     },
     valor: {
         type: Number,
-        required: true
+        required  : [ true, 'Se precisa o valor do serviço' ]
     },
     descrição: {
         type: String,
