@@ -52,9 +52,9 @@ router.post('/clientes', async (req,res) => {
 //update a cliente
 router.put('/clientes/:id', (req,res) => {
     const { id } = req.params;
-    const {nome, sobrenome, cpf, telefone, email, endereço, pets } = req.body;
+    const {nome, sobrenome, cpf, telefone, email, endereço } = req.body;
     clienteSchema
-    .updateOne({ _id: id }, { $set: {nome, sobrenome, cpf, telefone, email, endereço, pets }})
+    .updateOne({ _id: id }, { $set: {nome, sobrenome, cpf, telefone, email, endereço }})
     .then((data) => res.json(data))
     .catch((err) => res.json({message: err}));
 });
