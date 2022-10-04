@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const servicoSchema = mongoose.Schema({
     nome: {
         type: String,
+        unique: true,
         required  : [ true, 'Se precisa o nome do serviço' ]
     },
     valor: {
