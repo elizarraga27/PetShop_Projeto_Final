@@ -30,12 +30,23 @@ router.get('/clientes/cpf/:cpf', (req,res) => {
 
 
 // create cliente
-router.post('/clientes', (req,res) => {
+router.post('/clientes', async (req,res) => {
     const cliente = clienteSchema(req.body);
-    cliente
-    .save()
-    .then((data) => res.json(data))
-    .catch((err) => res.json({message: err}));
+    try{
+        const newCliente = await cliente.save(cliente)
+        res.status(200).json(newCliente)
+    }
+   
+    catch(err){
+        if(err.name == "ValidationError"){
+            res.status(400).json({message: err})
+            return;
+        }
+        else{
+            res.status(500).json({message: err});
+        }
+
+    } 
 });
 
 //update a cliente

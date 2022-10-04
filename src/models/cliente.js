@@ -3,14 +3,25 @@ const Schema = mongoose.Schema;
 const validateEmail = (email) => {
     const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email);
-  };
+};
+const validateTelefone = (telefone) => {
+    const re = /^[0-9]{2}([0-9]{8}|[0-9]{9})/;
+    return re.test(telefone);
+};
+const validateCpf = (cpf) => {
+    const re = /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/;
+    return re.test(cpf);
+};
+
+
+
 
 const clienteSchema = mongoose.Schema({
     nome: {
         type: String,
         required  : [ true, 'Se precisa o nome' ], 
         maxlength : [ 50, 'O nome não pode ter 50 caracteres'],
-        minlength : [ 3, 'O nome não poder ter menos de 3 letras'] 
+        minlength : [ 3, 'O nome não poder ter menos de 3 letras']
     },
     sobrenome: {
         type: String,
@@ -20,20 +31,28 @@ const clienteSchema = mongoose.Schema({
     },
     cpf: {
         type: Number,
+        unique: true,
         required  : [ true, 'Se precisa cpf' ],
-        maxlength : [ 11, 'O cpf tem que ter 11 numero'],
-        minlength : [ 11, 'O cpf tem que ter 11 numero'],
+        validate: [validateTelefone, "cpf invalido"],
+        match: [
+            /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/,
+          "cpf invalido",
+        ]
         
         
     },
     telefone: {
         type: Number,
         required  : [ true, 'Se precisa numero de telefone' ],
+        validate: [validateTelefone, "telefone invalido"],
+        match: [
+            /^[0-9]{2}([0-9]{8}|[0-9]{9})/,
+          "telefone invalido",
+        ],
     },
     email: {
         type: String,
-        required  : [ true, 'Se precisa email' ], 
-        maxlength : [ 100, 'El correo no puede exceder los 100 caracteres'],
+        required  : [ true, 'Se precisa email' ],
         validate: [validateEmail, "cadastre email valido"],
         match: [
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
