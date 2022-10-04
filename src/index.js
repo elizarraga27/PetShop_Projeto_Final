@@ -17,9 +17,12 @@ app.use('/api', petRoutes);
 app.use('/api', servicoRoutes);
 app.use('/api', produtoRoutes);
 app.use('/api', atendimentoRoutes);
+app.get('/api', (req, res) => {
+    res.send("Projeto Api PetShop, insira rota certa!, e Bom trabalho!");
 
+})
 app.get('/', (req, res) => {
-    res.send("teste a api");
+    res.send("Projeto Api PetShop, insira rota certa!, e Bom trabalho!");
 
 })
 
