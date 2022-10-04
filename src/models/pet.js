@@ -6,6 +6,17 @@ const petSchema = mongoose.Schema({
         type: String,
         required: true
     },
+
+    tipo: {
+        type: String,
+        required: true
+    },
+
+    raça: {
+        type: String,
+        required: true
+    },
+
     idade: {
         type: Number,
         required: true
@@ -14,15 +25,8 @@ const petSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    raça: {
-        type: String,
-        required: true
-    },
     
-    tipo: {
-        type: String,
-        required: true
-    },
+    
     tutor: {type: Schema.ObjectId, ref: 'cliente', required: true }
 },
 {
