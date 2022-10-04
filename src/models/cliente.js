@@ -53,10 +53,10 @@ const clienteSchema = mongoose.Schema({
     email: {
         type: String,
         required  : [ true, 'Se precisa email' ],
-        validate: [validateEmail, "cadastre email valido"],
+        validate: [validateEmail, "email invalido"],
         match: [
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-          "Cadastre email valido",
+          "email invalido",
         ],
     },
     endereço: {
