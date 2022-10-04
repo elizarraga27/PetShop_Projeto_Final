@@ -42,6 +42,10 @@ router.post('/clientes', async (req,res) => {
             res.status(400).json({message: err})
             return;
         }
+        if(err.code == 11000){
+            res.status(400).send('cpf já existe')
+            return;
+        }
         else{
             res.status(500).json({message: err});
         }
