@@ -2,6 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const petSchema = mongoose.Schema({
+
+    nroPet:{
+        type: Number,
+        unique: true,
+        required: [ true, 'se precisa numero para pet' ]
+    },
+
     nome: {
         type: String,
         required  : [ true, 'Se precisa o nome' ]

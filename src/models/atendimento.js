@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const atendimentoSchema = mongoose.Schema({
+    nroOrdem: {
+        type: Number,
+        unique: true,
+        required: [ true, 'se precisa numero de ordem']
+    },
     cliente: {type: Schema.ObjectId, ref: 'cliente',  required  : [ true, 'Se precisa Cliente' ] },
     pet: {type: Schema.ObjectId, ref: 'pet',  required  : [ true, 'Se precisa pet' ] },
     serviço: {type: Schema.ObjectId, ref: 'servico' },
