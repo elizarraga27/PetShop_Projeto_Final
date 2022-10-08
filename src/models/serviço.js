@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
 
 const servicoSchema = mongoose.Schema({
+    
+    nroServiço: {
+        type: Number,
+        unique: true,
+        required  : [ true, 'Se precisa o Numero de serviço' ]
+    },
+    
     nome: {
         type: String,
         unique: true,
