@@ -73,9 +73,9 @@ router.get('/servicos/nroServico/:nroServico', (req,res) => {
 //update serviço
 router.put('/servicos/:id', (req,res) => {
     const { id } = req.params;
-    const {nome, valor, descrição } = req.body;
+    const { nroServiço, nome, valor, descrição } = req.body;
     servicoSchema
-    .updateOne({ _id: id }, { $set: {nome, valor, descrição }})
+    .updateOne({ _id: id }, { $set: { nroServiço, nome, valor, descrição }})
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });

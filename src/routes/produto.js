@@ -75,9 +75,9 @@ router.get('/produtos/:id', (req,res) => {
 //update produto
 router.put('/produtos/:id', (req,res) => {
     const { id } = req.params;
-    const { nome, valor, descrição } = req.body;
+    const {nroProduto, nome, valor, descrição } = req.body;
     produtoSchema
-    .updateOne({ _id: id }, { $set: {nome, valor, descrição }})
+    .updateOne({ _id: id }, { $set: { nroProduto, nome, valor, descrição }})
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json({message: err}));
 });
