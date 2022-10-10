@@ -97,7 +97,7 @@ router.put('/pets/nroPet/:nroPet', (req,res) => {
     .catch((err) => res.status(400).json({message: err}));
 });
 
-//delete a cliente
+//delete pet
 router.delete('/pets/:id', (req,res) => {
     const { id } = req.params;
     petSchema
