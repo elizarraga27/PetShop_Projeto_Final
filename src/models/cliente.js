@@ -33,7 +33,7 @@ const clienteSchema = mongoose.Schema({
         type: Number,
         unique: true,
         required  : [ true, 'Se precisa cpf' ],
-        validate: [validateTelefone, "cpf invalido"],
+        validate: [validateCpf, "cpf invalido"],
         match: [
             /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/,
           "cpf invalido",
