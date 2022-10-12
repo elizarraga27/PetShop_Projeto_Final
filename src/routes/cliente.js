@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/clientes', (req, res) => {
     clienteSchema
     .find()
-    .then((data) => res.json(data))
+    .then((data) => res.json({ Clientes: data}))
     .catch((err) => res.json({message: err}));
 });
 
@@ -19,7 +19,7 @@ router.get('/cliente/:id', (req, res) => {
     .then((data) =>{
         
         if(data == null){
-            res.status(404).send('id não encontrado, a id não existe')
+            res.status(404).json({ message: 'id não encontrado, a id não existe', id})
             return;
         }
         else{
@@ -52,15 +52,15 @@ router.get('/cliente/cpf/:cpf', (req, res) => {
     .findOne({ cpf: cpf})
     .then((data) =>{
         if(!validateCpf(cpf)){
-            res.status(400).send('cpf invalido')
+            res.status(400).json({ message: 'cpf inserido é invalido', cpf})
             return;
         }
         if(data == null){
-            res.status(404).send('cpf não encontrado, cpf não cadastrado')
+            res.status(404).json({ message: 'cpf não encontrado, cpf não cadastrado', cpf})
             return;
         }
         else{
-            res.status(200).json(data)
+            res.status(200).json({ Cliente: data })
         }
         
 
@@ -85,7 +85,7 @@ router.post('/cliente', async (req, res) => {
     const cliente = clienteSchema(req.body);
     try{
         const newCliente = await cliente.save(cliente)
-        res.status(201).json(newCliente)
+        res.status(201).json({ Novo_Cliente: newCliente})
     }
    
     catch(err){
@@ -94,7 +94,7 @@ router.post('/cliente', async (req, res) => {
             return;
         }
         if(err.code == 11000){
-            res.status(400).send('cpf já existe')
+            res.status(400).json({ message: 'cpf já existe' })
             return;
         }
         else{
@@ -113,13 +113,13 @@ router.put('/cliente/:id', async (req, res) => {
     try{
 
         if(!cliente){
-        res.status(404).send('id não encontrado, id não existe')
+        res.status(404).json({ message: 'id não encontrado, id não existe', id })
         return;
       }
         else{
         cliente.set(req.body);
          await  cliente.save();
-        res.status(200).send('cliente atualizado')
+        res.status(200).json({ message: 'cliente atualizado', cliente})
         }
         
     }
@@ -130,7 +130,7 @@ router.put('/cliente/:id', async (req, res) => {
             return;
         }
         if(err.code == 11000){
-            res.status(400).send('cpf já existe')
+            res.status(400).json({ message: 'cpf já existe'})
             return;
         }
         else{
@@ -155,18 +155,18 @@ router.put('/cliente/cpf/:cpf', async (req, res) => {
    try{
 
     if(!validateCpf(cpf)){
-        res.status(400).send('cpf invalido')
+        res.status(400).json({ message: 'cpf invalido', cpf})
         return;
     } 
         
     if(!cliente){
-        res.status(404).send('cpf não encontrado, cpf não cadastrado')
+        res.status(404).json({ message: 'cpf não encontrado, cpf não cadastrado', cpf})
         return;
     } 
     else{
         cliente.set(req.body);
          await  cliente.save();
-        res.status(200).send('cliente atualizada')
+        res.status(200).json({ message: 'cliente atualizada', cliente})
     }
         
     }
@@ -194,11 +194,11 @@ const { id } = req.params;
         .findOneAndDelete({ _id: id })
         .then((data) =>{
             if(data == null){
-                res.status(404).send('id não encontrado, id não existe')
+                res.status(404).json({ message: 'id não encontrado, id não existe', id})
                 return;
             }
             else{
-                res.status(200).json(data)
+                res.status(200).json({ message: 'o cliente foi excluido com sucesso!' })
             }
             
     
@@ -228,16 +228,16 @@ router.delete('/cliente/cpf/:cpf', (req, res) => {
         .findOneAndDelete({ cpf: cpf })
         .then((data) =>{
             if(!validateCpf(cpf)){
-                res.status(400).send('cpf invalido')
+                res.status(400).json({ message: 'cpf invalido', cpf })
                 return;
             }
             if(data == null){
-                res.status(404).send('cpf não encontrado, cpf não existe')
+                res.status(404).json({ message: 'cpf não encontrado, cpf não existe', cpf })
                 return;
             }
         
             else{
-                res.status(200).send('Cliente excluido')
+                res.status(200).json({ message: 'o cliente foi excluido com sucesso!' })
             }
             
     
