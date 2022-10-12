@@ -113,7 +113,7 @@ router.put('/cliente/:id', async (req, res) => {
     try{
 
         if(!cliente){
-        res.status(404).send('id não encontrada, id não existe')
+        res.status(404).send('id não encontrado, id não existe')
         return;
       }
         else{
