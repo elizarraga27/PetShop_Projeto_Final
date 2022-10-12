@@ -4,7 +4,7 @@ const clienteSchema = require("../models/cliente");
 const router = express.Router();
 
 //get todos clientes
-router.get('/clientes', (req,res) => {
+router.get('/clientes', (req, res) => {
     clienteSchema
     .find()
     .then((data) => res.json(data))
@@ -12,18 +12,18 @@ router.get('/clientes', (req,res) => {
 });
 
 //get cliente pela id
-router.get('/clientes/:id', (req,res) => {
+router.get('/cliente/:id', (req, res) => {
     const { id } = req.params;
     clienteSchema
     .findById(id)
     .then((data) =>{
         
         if(data == null){
-            res.status(400).send('id não existe')
+            res.status(404).send('id não encontrado, a id não existe')
             return;
         }
         else{
-            res.status(200).json(data)
+            res.status(200).json({Cliente: data})
         }
         
 
@@ -42,7 +42,7 @@ router.get('/clientes/:id', (req,res) => {
 
 });
 //get pelo cpf
-router.get('/clientes/cpf/:cpf', (req,res) => {
+router.get('/cliente/cpf/:cpf', (req, res) => {
     const {cpf}  = req.params;
     const validateCpf = (cpf) => {
         const re = /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/;
@@ -56,7 +56,7 @@ router.get('/clientes/cpf/:cpf', (req,res) => {
             return;
         }
         if(data == null){
-            res.status(400).send('cpf não cadastrado')
+            res.status(404).send('cpf não encontrado, cpf não cadastrado')
             return;
         }
         else{
@@ -81,11 +81,11 @@ router.get('/clientes/cpf/:cpf', (req,res) => {
 
 
 // create cliente
-router.post('/clientes', async (req,res) => {
+router.post('/cliente', async (req, res) => {
     const cliente = clienteSchema(req.body);
     try{
         const newCliente = await cliente.save(cliente)
-        res.status(200).json(newCliente)
+        res.status(201).json(newCliente)
     }
    
     catch(err){
@@ -105,18 +105,26 @@ router.post('/clientes', async (req,res) => {
 });
 
 //update cliente pela id
-router.put('/clientes/:id', async (req,res) => {
+router.put('/cliente/:id', async (req, res) => {
     const  {id}  = req.params;
-    const cliente = await clienteSchema.findById(id);
+    const cliente = await clienteSchema.findOne({ _id: id });
     const  {nome, sobrenome, cpf, telefone, email, endereço } = req.body;
 
     try{
-        
+
+        if(!cliente){
+        res.status(404).send('id não encontrada, id não existe')
+        return;
+      }
+        else{
         cliente.set(req.body);
          await  cliente.save();
-        res.status(200).send('cliente atualizada')
+        res.status(200).send('cliente atualizado')
+        }
+        
     }
     catch(err){
+      
         if(err.name == "ValidationError"){
             res.status(400).json({message: err})
             return;
@@ -131,32 +139,122 @@ router.put('/clientes/:id', async (req,res) => {
 
     } 
 
+});
+
+//update cliente pelo cpf
+router.put('/cliente/cpf/:cpf', async (req, res) => {
     
-
-
+    const {cpf}  = req.params;
+    const cliente = await clienteSchema.findOne( { cpf: cpf} );
+    const {nome, sobrenome, telefone, email, endereço} = req.body;
+    const validateCpf = (cpf) => {
+        const re = /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/;
+        return re.test(cpf);
+    };
    
+   try{
+
+    if(!validateCpf(cpf)){
+        res.status(400).send('cpf invalido')
+        return;
+    } 
+        
+    if(!cliente){
+        res.status(404).send('cpf não encontrado, cpf não cadastrado')
+        return;
+    } 
+    else{
+        cliente.set(req.body);
+         await  cliente.save();
+        res.status(200).send('cliente atualizada')
+    }
+        
+    }
     
+    
+    catch(err){
+        if(err.name == "ValidationError"){
+            res.status(400).json({message: err})
+            return;
+        }
+      
+        else{
+            res.status(500).json({message: err});
+        }
+
+    } 
 
 });
+   
+//delete cliente pela id
+router.delete('/cliente/:id', (req, res) => {
+const { id } = req.params;
 
-
-//delete a cliente
-router.delete('/clientes/:id', (req,res) => {
-    const { id } = req.params;
-    clienteSchema
-    .remove({ _id: id })
-    .then((data) => res.json(data))
-    .catch((err) => res.json({message: err}));
-});
+        clienteSchema
+        .findOneAndDelete({ _id: id })
+        .then((data) =>{
+            if(data == null){
+                res.status(404).send('id não encontrado, id não existe')
+                return;
+            }
+            else{
+                res.status(200).json(data)
+            }
+            
+    
+        })
+        .catch((err) =>{
+        if(err.name == 'CastError'){
+            res.status(400).json({message: err});
+            return;
+        }
+     
+        else {res.status(500).json({message: err});
+                return;
+            }
+    })
+    
+    
+    });
 
 //delete pelo cpf
-router.delete('/clientes/cpf/:cpf', (req,res) => {
-    const {cpf}  = req.params;
-    clienteSchema
-    .remove({ cpf: cpf})
-    .then((data) => res.json(data))
-    .catch((err) => res.json({message: err}));
-});
+router.delete('/cliente/cpf/:cpf', (req, res) => {
+    const { cpf } = req.params;
+    const validateCpf = (cpf) => {
+        const re = /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/;
+        return re.test(cpf);
+    };
+        clienteSchema
+        .findOneAndDelete({ cpf: cpf })
+        .then((data) =>{
+            if(!validateCpf(cpf)){
+                res.status(400).send('cpf invalido')
+                return;
+            }
+            if(data == null){
+                res.status(404).send('cpf não encontrado, cpf não existe')
+                return;
+            }
+        
+            else{
+                res.status(200).send('Cliente excluido')
+            }
+            
+    
+        })
+        .catch((err) =>{
+        if(err.name == 'CastError'){
+            res.status(400).json({message: err});
+            return;
+        }
+     
+        else {res.status(500).json({message: err});
+                return;
+            }
+    })
+    
+    
+    });
 
 
 
