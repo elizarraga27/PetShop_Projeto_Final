@@ -1,5 +1,6 @@
 const express = require("express");
 const petSchema = require("../models/pet");
+const clienteSchema = require("../models/cliente");
 
 const router = express.Router();
 
@@ -102,6 +103,42 @@ router.get('/pet/nroPet/:nroPet', (req, res) => {
 
 
 });
+
+//get pet pela cpf do tutor
+router.get('/pet/cpf/:cpf', async (req, res) => {
+    const  {cpf}  = req.params;
+    const cliente = await clienteSchema.findOne({cpf});
+    const validateCpf = (cpf) => {
+        const re = /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/;
+        return re.test(cpf);
+    };
+   
+   try{
+
+    if(!validateCpf(cpf)){
+        res.status(400).json({ message: 'cpf invalido', cpf})
+        return;
+    } 
+        
+    if(!cliente){
+        res.status(404).json({ message: 'cpf não encontrado, cpf não cadastrado', cpf})
+        return;
+    } 
+    else{
+        const clienteId = cliente._id;
+        const tutorId = await petSchema.find({ tutor: clienteId}).populate('tutor')
+        res.status(200).json({ pet: tutorId})
+    }
+        
+    }
+    
+    
+    catch(err){
+        res.status(500).json({message: err});
+        } 
+ 
+});
+
 
 //update pet pela id
 router.put('/pet/:id', async (req, res) => {
