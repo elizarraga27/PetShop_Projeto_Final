@@ -119,7 +119,7 @@ router.put('/cliente/:id', async (req, res) => {
         else{
         cliente.set(req.body);
          await  cliente.save();
-        res.status(200).json({ message: 'cliente atualizado', cliente})
+        res.status(200).json({ message: 'os dados do cliente foi atualizado com sucesso!', cliente})
         }
         
     }
@@ -166,7 +166,7 @@ router.put('/cliente/cpf/:cpf', async (req, res) => {
     else{
         cliente.set(req.body);
          await  cliente.save();
-        res.status(200).json({ message: 'cliente atualizada', cliente})
+        res.status(200).json({ message: 'os dados do cliente foi atualizado com sucesso!', cliente})
     }
         
     }
