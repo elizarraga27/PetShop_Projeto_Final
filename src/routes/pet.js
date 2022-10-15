@@ -16,9 +16,17 @@ router.get('/pets', (req, res) => {
 // create pet
 router.post('/pet', async (req, res) => {
     const pet = petSchema(req.body);
+    const clienteId = pet.tutor;
+    const cliente = await clienteSchema.findById(clienteId);
     try{
-        const newPet = await pet.save(pet)
-        res.status(201).json({ Novo_Pet: newPet })
+        
+           if(!cliente){
+                res.status(404).json({ message: 'tutor não encontrado, cliente não cadastrado', clienteId})
+           }
+           else{
+                const newPet = await pet.save(pet)
+               res.status(201).json({ Novo_Pet: newPet })
+           }
     }
    
     catch(err){
