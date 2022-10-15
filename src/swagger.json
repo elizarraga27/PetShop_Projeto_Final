@@ -1,0 +1,2198 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+        "title": "API de PetShop",
+        "description": "Essa API tem como objetivo o control de uma PetShop",
+        "contact": {
+            "email": "eduardo.alejandro.lizarraga@gmail.com"
+        },
+        "version": "1.0.0"
+    
+    },
+    "servers":[
+        {
+            "url": "http://localhost:8080/api",
+            "description": "API PetShop"
+        }
+    ],
+    "paths": {
+        "/cliente":{
+            "post": {
+                "summary": "Cadastro do cliente",
+                "description": "Essa rota será responsável por cadastrar um novo cliente",
+                "tags": ["cliente"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/cliente"
+
+                            },
+                            "examples":{
+                                "cliente":{
+                                    "value": {
+                                        "nome": "Eduardo Alejandro",
+                                        "sobrenome": "Lizarraga Villarroel",
+                                        "cpf": 70884720233,
+                                        "telefone": 44991717552,
+                                        "email": "eduardo.alejandro.lizarraga@gmail.com",
+                                        "endereço": "av vitoria 5800"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "400": {
+                        "description": "Erro na requisição"
+                    },
+                    "500": {
+                        "description": "Erro no Servidor"
+                    },
+                    "201":{
+                        "description": "criado com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/cliente"
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                
+                }
+            }
+        },
+        "/cliente/cpf/{cpf}":{
+            "get":{
+                "description": "Busca de um cliente pelo cpf",
+                "summary": "Busca de um cliente pelo cpf",
+                "tags":["cliente"],
+                "parameters": [
+                    {
+                        "name": "cpf",
+                        "in": "path",
+                        "description": "cpf do cliente",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/cliente"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            },
+            "put":{
+                "description": "Alterar o cliente pelo cpf",
+                "summary": "Alterar o cliente pelo cpf",
+                "tags":["cliente"],
+                "parameters": [
+                    {
+                        "name": "cpf",
+                        "in": "path",
+                        "description": "cpf do cliente para alterar",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/cliente"
+
+                            },
+                            "examples":{
+                                "cliente":{
+                                    "value": {
+                                        "nome": "Eduardo Alejandro",
+                                        "sobrenome": "Lizarraga Villarroel",
+                                        "telefone": 44999657846,
+                                        "email": "alejandrolizarraga717@hotmail.com",
+                                        "endereço": "av vitoria 5800"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/cliente"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o cliente pelo cpf",
+                "summary": "Exclui o cliente pelo cpf",
+                "tags":["cliente"],
+                "parameters": [
+                    {
+                        "name": "cpf",
+                        "in": "path",
+                        "description": "cpf do cliente para Exclui",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/cliente"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/cliente/{id}":{
+            "get":{
+                "description": "Busca de um cliente pelo id",
+                "summary": "Busca de um cliente pelo id",
+                "tags":["cliente"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do cliente",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/cliente"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            },
+
+            "put":{
+                "description": "Alterar o cliente pelo id",
+                "summary": "Alterar o cliente pelo id",
+                "tags":["cliente"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do cliente para alterar",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/cliente"
+
+                            },
+                            "examples":{
+                                "cliente":{
+                                    "value": {
+                                        "nome": "Eduardo Alejandro",
+                                        "sobrenome": "Lizarraga Villarroel",
+                                        "cpf": 70884720233,
+                                        "telefone": 44999657846,
+                                        "email": "alejandrolizarraga717@hotmail.com",
+                                        "endereço": "av vitoria 5800"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/cliente"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o cliente pelo id",
+                "summary": "Exclui o cliente pelo id",
+                "tags":["cliente"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do cliente para Exclui",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/cliente"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+            
+        },
+        "/clientes":{
+            "get":{
+                "description": "Busca de todos os clientes",
+                "summary": "Busca de todos os clientes",
+                "tags":["cliente"],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/cliente"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/pet":{
+            "post": {
+                "summary": "Cadastro do pet",
+                "description": "Essa rota será responsável por cadastrar um novo pet",
+                "tags": ["pet"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/pet"
+
+                            },
+                            "examples":{
+                                "pet":{
+                                    "value": {
+                                        "nroPet": 10,
+                                        "nome": "marron",
+                                        "tipo": "cachorro",
+                                        "raça": "boxer",
+                                        "idade": 2,
+                                        "peso": 12,
+                                        "tutor": "6346b56fe55377b849798709"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "400": {
+                        "description": "Erro na requisição"
+                    },
+                    "500": {
+                        "description": "Erro no Servidor"
+                    },
+                    "201":{
+                        "description": "criado com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/pet"
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                
+                }
+            }
+        },
+        "/pet/cpf/{cpf}":{
+            "get":{
+                "description": "Busca de pet pelo cpf do tutor",
+                "summary": "Busca de pet pelo cpf do tutor",
+                "tags":["pet"],
+                "parameters": [
+                    {
+                        "name": "cpf",
+                        "in": "path",
+                        "description": "cpf do tutor",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/pet"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            }
+        },
+        "/pets":{
+            "get":{
+                "description": "Busca de todos os pets",
+                "summary": "Busca de todos os pets",
+                "tags":["pet"],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/pet"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/pet/{id}":{
+            "get":{
+                "description": "Busca de pet pelo id",
+                "summary": "Busca de pet pelo id",
+                "tags":["pet"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do pet ",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/pet"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            },
+
+            "put":{
+                "description": "Alterar o pet pelo id",
+                "summary": "Alterar o pet pelo id",
+                "tags":["pet"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do pet para alterar",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/pet"
+
+                            },
+                            "examples":{
+                                "pet":{
+                                    "value": {
+                                        "nroPet": 10,
+                                        "nome": "marron",
+                                        "tipo": "cachorro",
+                                        "raça": "boxer",
+                                        "idade": 2,
+                                        "peso": 12,
+                                        "tutor": "6346b56fe55377b849798709"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/pet"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o pet pelo id",
+                "summary": "Exclui o pet pelo id",
+                "tags":["pet"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do pet para Exclui",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/pet"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/pet/nroPet/{nroPet}":{
+            "get":{
+                "description": "Busca de pet pelo numero do pet",
+                "summary": "Busca de pet pelo numero do pet",
+                "tags":["pet"],
+                "parameters": [
+                    {
+                        "name": "nroPet",
+                        "in": "path",
+                        "description": "numero do pet",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/pet"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            },
+            "put":{
+                "description": "Alterar o pet pelo numero do pet",
+                "summary": "Alterar o pet pelo numero do pet",
+                "tags":["pet"],
+                "parameters": [
+                    {
+                        "name": "nroPet",
+                        "in": "path",
+                        "description": "numero do pet para alterar",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/pet"
+
+                            },
+                            "examples":{
+                                "pet":{
+                                    "value": {
+                                        
+                                        "nome": "marron",
+                                        "tipo": "cachorro",
+                                        "raça": "boxer",
+                                        "idade": 2,
+                                        "peso": 12,
+                                        "tutor": "6346b56fe55377b849798709"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/pet"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o pet pelo numero do pet",
+                "summary": "Exclui o pet pelo numero do pet",
+                "tags":["pet"],
+                "parameters": [
+                    {
+                        "name": "nroPet",
+                        "in": "path",
+                        "description": "numero do pet para Exclui",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/pet"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/produto":{
+            "post": {
+                "summary": "Cadastro do Produto",
+                "description": "Essa rota será responsável por cadastrar um novo Produto",
+                "tags": ["produto"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/produto"
+
+                            },
+                            "examples":{
+                                "produto":{
+                                    "value": {
+                                        "nroProduto": 10,
+                                        "nome": "sabão",
+                                        "valor": 200,
+                                        "descrição": "gato e cachorro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "400": {
+                        "description": "Erro na requisição"
+                    },
+                    "500": {
+                        "description": "Erro no Servidor"
+                    },
+                    "201":{
+                        "description": "criado com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                
+                }
+            }
+
+        },
+        "/produtos":{
+            "get":{
+                "description": "Busca de todos os produtos",
+                "summary": "Busca de todos os produtos",
+                "tags":["produto"],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/produto/nome/{nome}":{
+            "get":{
+                "description": "Busca de um produto pelo nome",
+                "summary": "Busca de um produto pelo nome",
+                "tags":["produto"],
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "path",
+                        "description": "nome do produto",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            },
+            "put":{
+                "description": "Alterar o produto pelo nome",
+                "summary": "Alterar o produto pelo nome",
+                "tags":["produto"],
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "path",
+                        "description": "nome do produto",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/produto"
+
+                            },
+                            "examples":{
+                                "produto":{
+                                    "value": {
+                                        "nroProduto": 3,
+                                        "valor": 200,
+                                        "descrição": "gato e cachorro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o produto pelo nome",
+                "summary": "Exclui o produto pelo nome",
+                "tags":["produto"],
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "path",
+                        "description": "nome do produto",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/produto/nroProduto/{nroProduto}":{
+            "get":{
+                "description": "Busca de um produto pelo numero do produto",
+                "summary": "Busca de um produto pelo numero do produto",
+                "tags":["produto"],
+                "parameters": [
+                    {
+                        "name": "nroProduto",
+                        "in": "path",
+                        "description": "numero do produto",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            },
+            "put":{
+                "description": "Alterar o produto pelo numero do produto",
+                "summary": "Alterar o produto pelo numero do produto",
+                "tags":["produto"],
+                "parameters": [
+                    {
+                        "name": "nroProduto",
+                        "in": "path",
+                        "description": "numero do produto",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/produto"
+
+                            },
+                            "examples":{
+                                "produto":{
+                                    "value": {
+                                        "nome": "pasta de dente",
+                                        "valor": 200,
+                                        "descrição": "gato e cachorro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o produto pelo numero de produto",
+                "summary": "Exclui o produto pelo numero de produto",
+                "tags":["produto"],
+                "parameters": [
+                    {
+                        "name": "nroProduto",
+                        "in": "path",
+                        "description": "numero do produto",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/produto/{id}":{
+            "get":{
+                "description": "Busca de um produto pelo id",
+                "summary": "Busca de um produto pelo id",
+                "tags":["produto"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do produto",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            },
+            "put":{
+                "description": "Alterar o produto pelo id",
+                "summary": "Alterar o produto pelo id",
+                "tags":["produto"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do produto",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/produto"
+
+                            },
+                            "examples":{
+                                "produto":{
+                                    "value": {
+                                        "nroProduto": 3,
+                                        "nome": "mamadera",
+                                        "valor": 200,
+                                        "descrição": "gato e cachorro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o produto pelo id",
+                "summary": "Exclui o produto pelo id",
+                "tags":["produto"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do produto",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/produto"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/servico":{
+            "post": {
+                "summary": "Cadastro do Serviço",
+                "description": "Essa rota será responsável por cadastrar um novo serviço",
+                "tags": ["serviço"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/servico"
+
+                            },
+                            "examples":{
+                                "serviço":{
+                                    "value": {
+                                        "nroProduto": 10,
+                                        "nome": "corte de unhas",
+                                        "valor": 200,
+                                        "descrição": "gato e cachorro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "400": {
+                        "description": "Erro na requisição"
+                    },
+                    "500": {
+                        "description": "Erro no Servidor"
+                    },
+                    "201":{
+                        "description": "criado com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                
+                }
+            }
+
+        },
+        "/servicos":{
+            "get":{
+                "description": "Busca de todos os serviços",
+                "summary": "Busca de todos os serviços",
+                "tags":["serviço"],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/servico/nome/{nome}":{
+            "get":{
+                "description": "Busca de um serviço pelo nome",
+                "summary": "Busca de um serviço pelo nome",
+                "tags":["serviço"],
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "path",
+                        "description": "nome do serviço",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            },
+            "put":{
+                "description": "Alterar o serviço pelo nome",
+                "summary": "Alterar o serviço pelo nome",
+                "tags":["serviço"],
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "path",
+                        "description": "nome do serviço",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/servico"
+
+                            },
+                            "examples":{
+                                "serviço":{
+                                    "value": {
+                                        "nroProduto": 3,
+                                        "valor": 200,
+                                        "descrição": "gato e cachorro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o serviço pelo nome",
+                "summary": "Exclui o serviço pelo nome",
+                "tags":["serviço"],
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "path",
+                        "description": "nome do serviço",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/servico/nroServico/{nroServico}":{
+            "get":{
+                "description": "Busca de um serviço pelo numero do serviço",
+                "summary": "Busca de um serviço pelo numero do serviço",
+                "tags":["serviço"],
+                "parameters": [
+                    {
+                        "name": "nroServiço",
+                        "in": "path",
+                        "description": "numero do serviço",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            },
+            "put":{
+                "description": "Alterar o serviço pelo numero do serviço",
+                "summary": "Alterar o serviço pelo numero do serviço",
+                "tags":["serviço"],
+                "parameters": [
+                    {
+                        "name": "nroServiço",
+                        "in": "path",
+                        "description": "numero do serviço",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/servico"
+
+                            },
+                            "examples":{
+                                "serviço":{
+                                    "value": {
+                                        "nome": "corte de cabelo",
+                                        "valor": 200,
+                                        "descrição": "gato e cachorro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o serviço pelo numero de serviço",
+                "summary": "Exclui o serviço pelo numero de serviço",
+                "tags":["serviço"],
+                "parameters": [
+                    {
+                        "name": "nroServiço",
+                        "in": "path",
+                        "description": "numero do serviço",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/servico/{id}":{
+            "get":{
+                "description": "Busca de um serviço pelo id",
+                "summary": "Busca de um serviço pelo id",
+                "tags":["serviço"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do serviço",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            },
+            "put":{
+                "description": "Alterar o serviço pelo id",
+                "summary": "Alterar o serviço pelo id",
+                "tags":["serviço"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do serviço",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/servico"
+
+                            },
+                            "examples":{
+                                "serviço":{
+                                    "value": {
+                                        "nroProduto": 3,
+                                        "nome": "spa",
+                                        "valor": 200,
+                                        "descrição": "gato e cachorro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o servico pelo id",
+                "summary": "Exclui o serviço pelo id",
+                "tags":["serviço"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do serviço",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/servico"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        }
+        
+    },
+    
+                "components":{
+                    "schemas": {
+                        "cliente":{
+                            "type": "object",
+                            "properties":{
+                                "nome": {
+                                    "type": "string"
+                                },
+                                "sobrenome": {
+                                    "type": "string"
+                                },
+                                "cpf": {
+                                    "type": "number"
+                                },
+                                 "telefone": {
+                                    "type":"number"
+                                 },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "endereço": {
+                                    "type":"string"
+                                },
+                                "id":{
+                                    "type":"string"
+                                }
+                            }
+                        },
+                        "pet":{
+                            "type": "object",
+                            "properties":{
+                                "nroPet": {
+                                    "type": "number"
+                                },
+                                "nome": {
+                                    "type": "string"
+                                },
+                                "tipo": {
+                                    "type": "string"
+                                },
+                                 "raça": {
+                                    "type":"string"
+                                 },
+                                "idade": {
+                                    "type": "number"
+                                },
+                                "peso": {
+                                    "type":"number"
+                                },
+                                "tutor":{
+                                    "type":"objectId"
+                                },
+                                "id":{
+                                    "type":"string"
+                                }
+                            }
+                        },
+                        "produto":{
+                            "type": "object",
+                            "properties":{
+                                "nroProduto": {
+                                    "type": "number"
+                                },
+                                "nome": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                },
+                                 "descrição": {
+                                    "type":"string"
+                                 },
+                                
+                                "id":{
+                                    "type":"string"
+                                }
+                            }
+                        },
+                        "servico":{
+                            "type": "object",
+                            "properties":{
+                                "nroServiço": {
+                                    "type": "number"
+                                },
+                                "nome": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                },
+                                 "descrição": {
+                                    "type":"string"
+                                 },
+                                
+                                "id":{
+                                    "type":"string"
+                                }
+                            }
+                        },
+                        "atendimento":{
+                            "type": "object",
+                            "properties":{
+                                "nroOrdem": {
+                                    "type": "number"
+                                },
+                                "cliente": {
+                                    "type": "objectId"
+                                },
+                                "pet": {
+                                    "type": "objectId"
+                                },
+                                 "serviço": {
+                                    "type":"objectId"
+                                 },
+                                 "produto": {
+                                    "type":"objectId"
+                                 },
+                                
+                                "id":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                }
+}

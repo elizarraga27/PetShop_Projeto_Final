@@ -6,6 +6,8 @@ const petRoutes = require("./routes/pet");
 const servicoRoutes = require("./routes/serviço");
 const produtoRoutes = require("./routes/produto");
 const atendimentoRoutes = require("./routes/atendimento");
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocs = require("./swagger.json");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -17,6 +19,7 @@ app.use('/api', petRoutes);
 app.use('/api', servicoRoutes);
 app.use('/api', produtoRoutes);
 app.use('/api', atendimentoRoutes);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.get('/api', (req, res) => {
     res.send("Projeto Api PetShop, insira rota certa!, e Bom trabalho!");
 
