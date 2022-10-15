@@ -32,4 +32,4 @@ mongoose.connect(process.env.mongodb_uri)
 .catch((erro) => console.log(erro));
 
 
-app.listen(port, () => console.log('servidor iniciado com sucesso!', port) );
+app.listen(port, () => console.log(`servidor iniciado com sucesso! localhost:${port}/api`) );
