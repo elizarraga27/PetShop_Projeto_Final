@@ -161,13 +161,20 @@ router.put('/pet/:id', async (req, res) => {
     const { id } = req.params;
     const pet = await petSchema.findOne({ _id: id });
     const { nroPet, nome, idade, peso, raça, tipo, tutor } = req.body;
+    const clienteId = { nroPet, nome, idade, peso, raça, tipo, tutor }.tutor;
+    const cliente = await clienteSchema.findById(clienteId);
     
     try{
 
         if(!pet){
         res.status(404).json({ message: 'id não encontrado, id não existe', id })
         return;
-      }
+        }
+
+        if(!cliente){
+            res.status(404).json({ message: 'tutor não encontrado, cliente não cadastrado', clienteId})
+        }
+
         else{
         pet.set(req.body);
          await  pet.save();
@@ -199,13 +206,20 @@ router.put('/pet/nroPet/:nroPet', async (req, res) => {
     const { nroPet } = req.params;
     const pet = await petSchema.findOne({ nroPet: nroPet });
     const {nome, idade, peso, raça, tipo, tutor } = req.body;
+    const clienteId = {nome, idade, peso, raça, tipo, tutor }.tutor;
+    const cliente = await clienteSchema.findById(clienteId);
 
     try{
    
     if(!pet){
         res.status(404).json({ message: 'numero de pet não encontrado, numero de pet não cadastrado', nroPet})
         return;
-    } 
+    }
+    
+    if(!cliente){
+        res.status(404).json({ message: 'tutor não encontrado, cliente não cadastrado', clienteId})
+    }
+    
     else{
         pet.set(req.body);
          await  pet.save();
