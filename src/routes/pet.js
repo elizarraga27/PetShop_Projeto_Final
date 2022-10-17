@@ -135,7 +135,7 @@ router.get('/pet/cpf/:cpf', async (req, res) => {
     else{
         const clienteId = cliente._id;
         const tutorId = await petSchema.find({ tutor: clienteId}).populate('tutor');
-        const tutorVal = await petSchema.findOne({ tutor: clienteId}).populate('tutor');
+        const tutorVal = await petSchema.findOne({ tutor: clienteId});
             if(!tutorVal){
                 res.status(404).json({ message: 'Pet não encontrado, o cliente existe mais não tem pet cadastrado', cpf })
                 return;
