@@ -2066,7 +2066,485 @@
                 }
 
             }
+        },
+        "/atendimento":{
+            "post": {
+                "summary": "Cadastro do atendimento",
+                "description": "Essa rota será responsável por cadastrar um novo atendimento",
+                "tags": ["atendimento"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/atendimento"
+
+                            },
+                            "examples":{
+                                "atendimento":{
+                                    "value": {
+                                        "nroOrdem": 10,
+                                        "cliente": "6346b9c57eaee3c2c1914bc1",
+                                        "serviço": ["6340d968a939bfa59baea9d2", "634470a75e1f72101af9c534"],
+                                        "produto": ["6340d2276a02c618ad378c15", "6340d29e68c67e22c2f307c3"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "400": {
+                        "description": "Erro na requisição"
+                    },
+                    "500": {
+                        "description": "Erro no Servidor"
+                    },
+                    "201":{
+                        "description": "criado com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/atendimento"
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                
+                }
+            }
+        },
+        "/atendimentos":{
+            "get":{
+                "description": "Busca de todos os atendimentos",
+                "summary": "Busca de todos os atendimentos",
+                "tags":["atendimento"],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/atendimento"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/atendimento/cpf/{cpf}":{
+            "get":{
+                "description": "Busca de atendimento pelo cpf",
+                "summary": "Busca de atendimento pelo cpf",
+                "tags":["atendimento"],
+                "parameters": [
+                    {
+                        "name": "cpf",
+                        "in": "path",
+                        "description": "cpf do cliente",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/atendimento"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            }
+        },
+        "/atendimento/nroOrdem/{nroOrdem}":{
+            "get":{
+                "description": "Busca de um atendimento pelo numero do ordem",
+                "summary": "Busca de um atendimento pelo numero do ordem",
+                "tags":["atendimento"],
+                "parameters": [
+                    {
+                        "name": "nroOrdem",
+                        "in": "path",
+                        "description": "numero do ordem",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/atendimento"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+                  
+
+                }
+
+            },
+            "put":{
+                "description": "Alterar o atendimento pelo numero do ordem",
+                "summary": "Alterar o atendimento pelo numero do ordem",
+                "tags":["atendimento"],
+                "parameters": [
+                    {
+                        "name": "nroOrdem",
+                        "in": "path",
+                        "description": "numero do ordem",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/atendimento"
+
+                            },
+                            "examples":{
+                                "atendimento":{
+                                    "value": {
+                                        "nroOrdem": 10,
+                                        "cliente": "6346b9c57eaee3c2c1914bc1",
+                                        "serviço": [
+                                        "6340d968a939bfa59baea9d2",
+                                        "634470a75e1f72101af9c534"
+                                        ],
+                                        "produto": [
+                                        "6340d2276a02c618ad378c15",
+                                        "6340d29e68c67e22c2f307c3"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/atendimento"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o atendimento pelo numero de ordem",
+                "summary": "Exclui o atendimento pelo numero de ordem",
+                "tags":["atendimento"],
+                "parameters": [
+                    {
+                        "name": "nroOrdem",
+                        "in": "path",
+                        "description": "numero do ordem",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/atendimento"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
+        },
+        "/atendimento/{id}":{
+            "get":{
+                "description": "Busca de atendimento pelo id",
+                "summary": "Busca de atendimento pelo id",
+                "tags":["atendimento"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do atendimento ",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/atendimento"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            },
+
+            "put":{
+                "description": "Alterar o atendimento pelo id",
+                "summary": "Alterar o atendimento pelo id",
+                "tags":["atendimento"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do atendimento para alterar",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/atendimento"
+
+                            },
+                            "examples":{
+                                "atendimento":{
+                                    "value": {
+                                        "nroOrdem": 10,
+                                        "cliente": "6346b9c57eaee3c2c1914bc1",
+                                        "serviço": [
+                                        "6340d968a939bfa59baea9d2",
+                                        "634470a75e1f72101af9c534"
+                                        ],
+                                        "produto": [
+                                        "6340d2276a02c618ad378c15",
+                                        "6340d29e68c67e22c2f307c3"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/atendimento"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+            },
+            "delete":{
+                "description": "Exclui o atendimento pelo id",
+                "summary": "Exclui o atendimento pelo id",
+                "tags":["atendimento"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do atendimento para Exclui",
+                        "required": true
+                    }
+                ],
+                
+                "responses":{
+                    "200":{
+                        
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "items":{
+                                        "$ref":"#/components/schemas/atendimento"
+                                    }
+
+                                }
+                            }
+                        }
+                    
+                        
+                        
+                    },
+                    "400":{
+                        "description": "Erro na requisição"
+                        
+                    },
+
+                    "404":{
+                        "description": "não encontrado"
+                    },
+
+                    "500":{
+                        "description": "Erro no Servidor"
+                    }
+
+                }
+
+            }
         }
+
         
     },
     
@@ -2178,9 +2656,7 @@
                                 "cliente": {
                                     "type": "objectId"
                                 },
-                                "pet": {
-                                    "type": "objectId"
-                                },
+                                
                                  "serviço": {
                                     "type":"objectId"
                                  },
