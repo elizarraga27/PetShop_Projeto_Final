@@ -458,7 +458,7 @@
                                         "raça": "boxer",
                                         "idade": 2,
                                         "peso": 12,
-                                        "tutor": "6346b56fe55377b849798709"
+                                        "tutorCpf": 70884720233
                                     }
                                 }
                             }
@@ -654,7 +654,7 @@
                                         "raça": "boxer",
                                         "idade": 2,
                                         "peso": 12,
-                                        "tutor": "6346b56fe55377b849798709"
+                                        "tutorCpf": 70884720233
                                     }
                                 }
                             }
@@ -821,7 +821,7 @@
                                         "raça": "boxer",
                                         "idade": 2,
                                         "peso": 12,
-                                        "tutor": "6346b56fe55377b849798709"
+                                        "tutorCpf": 70884713296
                                     }
                                 }
                             }

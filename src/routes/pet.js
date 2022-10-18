@@ -15,28 +15,45 @@ router.get('/pets', (req, res) => {
 
 // create pet
 router.post('/pet', async (req, res) => {
-    const pet = petSchema(req.body);
-    const clienteId = pet.tutor;
-    const cliente = await clienteSchema.findById(clienteId);
+    const { nroPet, nome, idade, peso, raça, tipo, tutorCpf } = req.body;
+    const cpfId = await clienteSchema.findOne({ cpf: tutorCpf });
+    
+    const validateCpf = (cpf) => {
+        const re = /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/;
+        return re.test(cpf);
+    };
+    
     try{
+           if(!tutorCpf){
+                res.status(400).json({ erro: 'precisa inserir cpf'})
+                return;
+           }
+
+           if(!validateCpf(tutorCpf)){
+                res.status(400).json({ message: 'cpf invalido', tutorCpf})
+                return;
+           } 
         
-           if(!cliente){
-                res.status(404).json({ message: 'tutor não encontrado, cliente não cadastrado', clienteId})
+           if(!cpfId){
+                res.status(404).json({ message: 'tutor não encontrado, cliente não cadastrado', tutorCpf})
+                return
            }
            else{
+                const tutor = cpfId._id;
+                const pet = petSchema({ nroPet, nome, idade, peso, raça, tipo, tutor });
                 const newPet = await pet.save(pet)
-               res.status(201).json({ Novo_Pet: newPet })
+                res.status(201).json({ Novo_Pet: newPet })
            }
     }
    
     catch(err){
         if(err.name == "ValidationError"){
-            res.status(400).json({message: err})
+           res.status(400).json({message: err})
             return;
         }
         if(err.code == 11000){
             res.status(400).json({ message: 'numero de pet já existe' })
-            return;
+           return;
         }
         else{
             res.status(500).json({message: err});
@@ -44,6 +61,7 @@ router.post('/pet', async (req, res) => {
 
     } 
 });
+
 
 
 //get pet pela id
@@ -160,9 +178,7 @@ router.get('/pet/cpf/:cpf', async (req, res) => {
 router.put('/pet/:id', async (req, res) => {
     const { id } = req.params;
     const pet = await petSchema.findOne({ _id: id });
-    const { nroPet, nome, idade, peso, raça, tipo, tutor } = req.body;
-    const clienteId = { nroPet, nome, idade, peso, raça, tipo, tutor }.tutor;
-    const cliente = await clienteSchema.findById(clienteId);
+    const { nroPet, nome, idade, peso, raça, tipo, tutorCpf } = req.body;
     
     try{
 
@@ -170,16 +186,38 @@ router.put('/pet/:id', async (req, res) => {
         res.status(404).json({ message: 'id não encontrado, id não existe', id })
         return;
         }
+        
+       if(!tutorCpf){
+            pet.set( req.body );
+            await  pet.save();
+            res.status(200).json({ message: 'Dados de pet atualizado', pet })
+            }
+       if(tutorCpf){
+            const cpfId = await clienteSchema.findOne({ cpf: tutorCpf });
+            const validateCpf = (cpf) => {
+                const re = /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/;
+                return re.test(cpf);
+            };
 
-        if(!cliente){
-            res.status(404).json({ message: 'tutor não encontrado, cliente não cadastrado', clienteId})
-        }
+                    if(!validateCpf(tutorCpf)){
+                        res.status(400).json({ message: 'cpf invalido', tutorCpf})
+                        return;
+                    }
+                    
+                    if(!cpfId){
+                        res.status(404).json({ message: 'tutor não encontrado, cliente não cadastrado', tutorCpf})
+                        return;
+                    }
 
-        else{
-        pet.set(req.body);
-         await  pet.save();
-        res.status(200).json({ message: 'Dados de pet atualizado', pet })
-        }
+                    else{
+                        const tutor = cpfId._id;
+                        pet.set({ nroPet, nome, idade, peso, raça, tipo, tutor });
+                        await  pet.save();
+                        res.status(200).json({ message: 'Dados de pet atualizado', pet })
+                    }
+                
+            }
+        
         
     }
     catch(err){
@@ -205,41 +243,63 @@ router.put('/pet/:id', async (req, res) => {
 router.put('/pet/nroPet/:nroPet', async (req, res) => {
     const { nroPet } = req.params;
     const pet = await petSchema.findOne({ nroPet: nroPet });
-    const {nome, idade, peso, raça, tipo, tutor } = req.body;
-    const clienteId = {nome, idade, peso, raça, tipo, tutor }.tutor;
-    const cliente = await clienteSchema.findById(clienteId);
-
+    const { nome, idade, peso, raça, tipo, tutorCpf } = req.body;
+    
     try{
-   
-    if(!pet){
-        res.status(404).json({ message: 'numero de pet não encontrado, numero de pet não cadastrado', nroPet})
+
+        if(!pet){
+        res.status(404).json({ message: 'numero de pet não encontrado, numero de pet não existe', nroPet })
         return;
-    }
-    
-    if(!cliente){
-        res.status(404).json({ message: 'tutor não encontrado, cliente não cadastrado', clienteId})
-    }
-    
-    else{
-        pet.set(req.body);
-         await  pet.save();
-        res.status(200).json({ message: 'dados de pet atualizado', pet })
-    }
+        }
+        
+       if(!tutorCpf){
+            pet.set( req.body );
+            await  pet.save();
+            res.status(200).json({ message: 'Dados de pet atualizado', pet })
+            }
+       if(tutorCpf){
+            const cpfId = await clienteSchema.findOne({ cpf: tutorCpf });
+            const validateCpf = (cpf) => {
+                const re = /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/;
+                return re.test(cpf);
+            };
+
+                    if(!validateCpf(tutorCpf)){
+                        res.status(400).json({ message: 'cpf invalido', tutorCpf})
+                        return;
+                    }
+                    
+                    if(!cpfId){
+                        res.status(404).json({ message: 'tutor não encontrado, cliente não cadastrado', tutorCpf})
+                        return;
+                    }
+
+                    else{
+                        const tutor = cpfId._id;
+                        pet.set({ nroPet, nome, idade, peso, raça, tipo, tutor });
+                        await  pet.save();
+                        res.status(200).json({ message: 'Dados de pet atualizado', pet })
+                    }
+                
+            }
+        
         
     }
-    
-    
     catch(err){
+      
         if(err.name == "ValidationError"){
             res.status(400).json({message: err})
             return;
         }
-      
+        if(err.code == 11000){
+            res.status(400).json({ message: 'Numero de pet já existe'})
+            return;
+        }
         else{
             res.status(500).json({message: err});
         }
 
-    }
+    } 
 });
 
 //delete pet pela id
