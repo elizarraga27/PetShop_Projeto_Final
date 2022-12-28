@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
+const express = require("express");
+const usuarioSchema = require("../models/usuario");
 
-const client = new mongoose('mongodb+srv://toti:toti@petshop.ktnnarp.mongodb.net/PetShop?retryWrites=true&w=majority');
-const dbName = 'PetShop';
 
 
 //const lerPergunta = async (pergunta) => {
@@ -19,11 +19,8 @@ const dbName = 'PetShop';
 
 const getUser = async (user) => {
     try{
-        await client.connect();
-        //console.log('conected to server');
-        const db = client.db(dbName);
-        const collection = db.collection('usuarios');
-        const consultaJson = await collection.findOne({user: user});
+        
+        const consultaJson = await usuarioSchema.findOne({user: user});
         return consultaJson.user;
     } catch(err){
         return false;
@@ -32,19 +29,15 @@ const getUser = async (user) => {
 
 const setUser = async(user) => {
     try{
-        await client.connect();
-        //console.log('conected to server');
-        const db = client.db(dbName);
-        const collection = db.collection('usuarios');
-        const consultaJson = await collection.insertOne({user: user});
-        return consultaJson;
+
+        const consultaJson = await usuarioSchema.insertOne({user: user});
+        return consultaJson.user;
     } catch(err) {
         return false;
     }
 }
 
 module.export = {
-    //lerPergunta,
     setUser,
     getUser
 }

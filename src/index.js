@@ -10,12 +10,14 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require("./swagger.json");
 const venom = require('venom-bot');
 const mg = require('./bot_whatsapp/mongo');
+const bot = require('./bot_whatsapp/bot_index');
 
 
 const app = express();
 const port = process.env.PORT || 8080;
 
 //middleware
+
 app.use(express.json());
 app.use('/api', clienteRoutes);
 app.use('/api', petRoutes);
@@ -37,45 +39,7 @@ mongoose.connect(process.env.mongodb_uri)
 .then(() => console.log('Conexão a base de dados atlas com succeso!'))
 .catch((erro) => console.log(erro));
 
-venom
-    .create({headless: false})
-    .then((client) => start(client))
-    .catch((erro) => {
-        console.log(erro);
-    });
 
-function start(client) {
-    console.log('Iniciando o BOT...');
-    client.onMessage(async (msg) => {
-        try{
-            //setar usuario no mongo
-            const user = msg.from.replace(/\D/g, '');
-            const getUser = await mg.getUser(user);
-
-            if(getUser == false){
-                setUserFrom = await mg.setUser(user);
-            }
-
-            //setar pergunta
-           // const pergunta = msg.body;
-            //const resposta = await mg.lerPergunta(pergunta);
-
-            //if(resposta !== false){
-            //    console.log('Reposta OK: ' + resposta);
-            //    client.sendText(msg.from, resposta);
-            //}
-
-            //else if(reposta === false){
-            //    client.sendText(msg.from, 'Não entendi sua pergunta.');
-           // }
-
-
-        }
-        catch(e) {
-            console.log(e);
-        }
-    });
-}
 
 
 
